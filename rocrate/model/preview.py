@@ -45,14 +45,20 @@ class Preview(File):
         return val
 
     def generate_html(self):
-        info_dict = self.crate.get_info()
+        # info_dict = self.crate.get_info()
         # print(info_dict['name'])
         # print(info_dict['creator'])
         base_path = os.path.abspath(os.path.dirname(__file__))
         template = open(os.path.join(base_path,'..' ,'templates', 'preview_template.html.j2'))
         src = Template(template.read())
         template.close()
-        out_html = src.render(crate=info_dict)
+        context_entities = []
+        data_entities = []
+        for entity in self.crate.contextual_entities:
+            context_entities.append(entity._jsonld)
+        for entity in self.crate.data_entities:
+            data_entities.append(entity._jsonld)
+        out_html = src.render(crate=self.crate, context=context_entities, data=data_entities)
         return out_html
     
     # TODO:should take into account the case if a readed preview file. in this case there is a source of it:
