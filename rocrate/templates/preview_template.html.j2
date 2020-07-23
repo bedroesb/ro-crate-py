@@ -49,6 +49,14 @@
     <img src="{{ crate.image }}" style="width: 100%;"/>
   {%endif %}
 
+  
+  <dl>
+  {% for entry in context %}
+    <dt>{{ entry['@type'] }}</dt>
+    <dd>{{ entry['name'] }}</dd>
+  {% endfor %}
+  </dl>
+
   <dl>
   {% if crate.url %}
     <dt>URL</dt>
@@ -85,7 +93,7 @@
     {% for entry in data %}
       <div class="data-entity" id="">
           <strong>Data entity</strong>
-        <a class="data-entity-link" href="">{{ entry['@id'] }}</a>
+        <a class="data-entity-link" href="{{ entry['@id'] }}">{{ entry['@id'] }}</a>
       </div>
     {% endfor %}
   </div>
